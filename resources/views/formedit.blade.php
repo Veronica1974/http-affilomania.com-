@@ -32,13 +32,19 @@
     <input type="password" id="password_{{$user->Id}}" name='password' class="form-control" value="{{$user->password}}" required>
     <label for="inputPassword">Password</label>
   </div> -->
-
+ @if ($user->is_active)
+ <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" id='is_active_{{$user->Id}}' name='is_active' value="1" checked> Active me
+    </label>
+  </div>
+ @else
  <div class="checkbox mb-3">
     <label>
       <input type="checkbox" id='is_active_{{$user->Id}}' name='is_active' value="1"> Active me
     </label>
   </div>
- 
+ @endif
     <input type="hidden" id="custid_{{$user->Id}}" name='custid'   value="{{$user->Id}}">
     <button type="button" class="btn btn-primary edituser" id="edituser_{{$user->Id}}">Edit user</button>
     <button type="button" class="btn btn-primary deleteuser" id="deleteuser_{{$user->Id}}">Delete use</button>

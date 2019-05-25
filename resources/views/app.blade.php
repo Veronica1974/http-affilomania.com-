@@ -36,8 +36,10 @@
 	  $("#insertuser").click(function(){
 		 // e.preventDefault();
 		 var is_active = 0;
+		 var checked =  "";
 		 if ($('#is_active').is(':checked')) {
 			 is_active = 1;
+			 var checked =  "checked";
 		 }
 		 $.ajaxSetup({
   headers: {
@@ -68,8 +70,34 @@
             		  var result = data.data[0];
             		  var newrow = '<tr class="clickable-row" id="'+result.Id+'"><th scope="row">'+result.Id+'</th><td>'+result.first_name+'</td><td>'+result.last_name+'</td><td>'+result.username+'</td><td>'+result.email+'</td><td>'+result.created_at+'</td><td>'+result.last_update_time+'</td><td>'+result.is_active+'</td></tr>';
             		  var newrowform = ' <tr id="edit"'+result.Id+'" class="trdisplaynone"><td colspan="8"></td></tr>';
-            		  $("#usertable tbody").append(newrow);
-            		  $("#usertable tbody").append(newrowform);
+            		  var newrowformtropen = '<tr id="edit'+result.Id+'" class="trdisplaynone"><td colspan="8">';
+            		  var formtagopen = '<div class="containereditform"><form class="form-signin" id="editform_{{$user->id}}">';
+            		  var tophtml = ' <div class="text-center mb-4"><p></p></div><div class="alert-danger"></div>';
+            		  var formtagfirstname = '<div class="form-label-group">'+
+            		   '<input type="text" id="first_name_'+result.Id+'" name="first_name" class="form-control" value="'+result.first_name+'" required autofocus>'+
+            		    '<label for="inputEmail">Firs Name</label></div>';
+            		   var formtaglastname = ' <div class="form-label-group">'+
+            			    '<input type="text" id="last_name_'+result.Id+'" name="last_name" class="form-control"  value="'+result.last_name+'" required autofocus>'+
+            		    '<label for="inputEmail">Last Name</label></div>';
+            		    var formtagemail = ' <div class="form-label-group">'+
+            		        '<input type="email" id="email_'+result.Id+'" name="email" class="form-control"  value="'+result.email+'" required autofocus>'+
+            		    '<label for="inputEmail">Email address</label></div>';
+            		  /*  var formtapassword = ' <div class="form-label-group">'+
+            		        '<input type="password" id="password_'+result.Id+'" name="password" class="form-control" value="'+result.password+'" required>'+
+            		    '<label for="inputPassword">Password</label></div>';*/
+
+            		    var formtagactive = '<div class="checkbox mb-3"><label><input type="checkbox" id="is_active_'+result.Id+'" name="is_active" value="1" '+checked+'> Active me</label></div>';
+              		    var formtagid = ' <input type="hidden" id="custid_'+result.Id+'" name="custid"   value="'+result.Id+'">';   
+            		    var formbuttontag = ' <button type="button" class="btn btn-primary edituser" id="edituser_'+result.Id+'">Edit user</button>  '+
+            		        '<button type="button" class="btn btn-primary deleteuser" id="deleteuser_'+result.Id+'">Delete use</button>';
+            		    var formclosetag = ' </form></div>';
+                        var newrowformclose = '</td></tr>';
+            		    
+            		 // $("#usertable tbody").append(newrow);
+            		  $("#usertable tbody").append(newrow+newrowformtropen+formtagopen+tophtml+formtagfirstname+formtaglastname+formtagemail+formtagactive+formtagid+formbuttontag+formclosetag+newrowformclose);
+            		  $("#adduserform")[0].reset();
+            		  $(".containerform").hide();
+            		 
                 	  }
             	},
             	error: function(data){
@@ -81,7 +109,7 @@
 	  });
 
 	  
-	  $(".clickable-row").click(function(){
+	  $(document).on("click", ".clickable-row" , function() {
 		  if($("#edit"+this.id).attr('class') == 'trdisplaynone'){
 			  $("#edit"+this.id).attr('class', 'trdisplay');
 			  
@@ -182,4 +210,4 @@
  </script>
   </body>
 </html>
-    
+   

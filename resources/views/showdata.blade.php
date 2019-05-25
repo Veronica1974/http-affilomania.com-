@@ -30,7 +30,7 @@
                   <td class = "active">{{$user->is_active}}</td>
                  
 				  </tr>
-				  <tr id="edit{{$user->Id}}" class="trdisplaynone"><td colspan="8">@include('formedit')</td></tr>d
+				  <tr id="edit{{$user->Id}}" class="trdisplaynone"><td colspan="8">@include('formedit')</td></tr>
 		@endforeach
 		 @endif
        </tbody>
